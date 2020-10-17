@@ -15,7 +15,7 @@ public class Admin extends Person{
 		this.authorization = authorization;
 	}
 	
-	public Authorization getAuthorizationId() {
+	public Authorization getAuthorization() {
 		return authorization;
 	}
 	
