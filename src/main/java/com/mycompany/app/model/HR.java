@@ -1,37 +1,22 @@
 package com.mycompany.app.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class HR {
+public class HR extends Person {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long hrId;
-	
 	@OneToOne
-	@JoinColumn(name = "id")
-	private Employee hr;
+	@JoinColumn(name = "authorizationId")
+	private Authorization authorization;
 	
-	public void setHrId(Long id) {
-		hrId = id;
+	public void setAuthorization(Authorization authorization) {
+		this.authorization = authorization;
 	}
 	
-	public void setHr(Employee hr) {
-		this.hr = hr;
-	}
-	
-	public Long getHrId() {
-		return hrId;
-	}
-	
-	public Employee getHr() {
-		return hr;
+	public Authorization getAuthorization() {
+		return authorization;
 	}
 	
 }

@@ -37,6 +37,7 @@ public class WebController {
 	
 	@GetMapping("/emp")
 	public ModelAndView showSample() {
+		adminService.createPass();
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("sample");
 		return mv;

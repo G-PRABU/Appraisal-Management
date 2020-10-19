@@ -9,38 +9,27 @@ import javax.persistence.OneToOne;
 @Entity
 public class Employee extends Person{
 
-	@ManyToOne
-	@JoinColumn(name = "branchId")
-	private Branch branch;
 
 	@ManyToOne
-	@JoinColumn(name = "departmentId")
-	private Department department;
+	@JoinColumn(name = "managerId")
+	private Manager manager;
 	
 	@OneToOne
 	@JoinColumn(name = "authorizationId")
 	private Authorization authorization;
 	
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setManager(Manager manager) {
+		this.manager = manager;
 	}
-	
-	public void setBranch(Branch branch) {
-		this.branch = branch;
-	}
-	
+		
 	public void setAuthorization(Authorization authorization) {
 		this.authorization = authorization;
 	}
 	
-	public Department getDepartment() {
-		return department;
+	public Manager getManager() {
+		return manager;
 	}
-	
-	public Branch getBranch() {
-		return branch;
-	}
-	
+		
 	public Authorization getAuthorization() {
 		return authorization;
 	}

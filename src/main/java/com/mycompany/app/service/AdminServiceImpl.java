@@ -11,6 +11,7 @@ import com.mycompany.app.model.Employee;
 import com.mycompany.app.repository.AdminRepository;
 import com.mycompany.app.repository.AuthorizationRepository;
 import com.mycompany.app.repository.EmployeeRepository;
+import com.mycompany.app.repository.ManagerRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -23,6 +24,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired 
 	AuthorizationRepository authorizationRepository;
+	
+	@Autowired 
+	ManagerRepository managerRepository;
 	
     @Autowired 
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -48,8 +52,12 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	public void createPass() {
-		Authorization auth = adminRepository.findById(1L).get().getAuthorization();
-		auth.setAuthorizationPass(bCryptPasswordEncoder.encode("admin1"));
+		Authorization auth = employeeRepository.findById(1L).get().getAuthorization();
+		auth.setAuthorizationPass(bCryptPasswordEncoder.encode("employee1"));
 		authorizationRepository.save(auth);
+		
+		Authorization auth1 = managerRepository.findById(1L).get().getAuthorization();
+		auth1.setAuthorizationPass(bCryptPasswordEncoder.encode("manager1"));
+		authorizationRepository.save(auth1);
 	}
 }
