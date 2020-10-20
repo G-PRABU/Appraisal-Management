@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mycompany.app.model.Authorization;
 import com.mycompany.app.model.Employee;
 import com.mycompany.app.repository.AdminRepository;
 import com.mycompany.app.repository.AuthorizationRepository;
@@ -51,13 +50,5 @@ public class AdminServiceImpl implements AdminService{
 		return employeeRepository.findAll();
 	}
 
-	public void createPass() {
-		Authorization auth = employeeRepository.findById(1L).get().getAuthorization();
-		auth.setAuthorizationPass(bCryptPasswordEncoder.encode("employee1"));
-		authorizationRepository.save(auth);
-		
-		Authorization auth1 = managerRepository.findById(1L).get().getAuthorization();
-		auth1.setAuthorizationPass(bCryptPasswordEncoder.encode("manager1"));
-		authorizationRepository.save(auth1);
-	}
+
 }

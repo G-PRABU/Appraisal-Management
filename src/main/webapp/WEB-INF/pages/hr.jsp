@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE>
+<html lang="en">
 <head>
+<title>HR Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style><%@include file="/WEB-INF/css/style.css"%></style>
@@ -20,7 +22,7 @@
   <a href="hr/profile/${hr.id}">Goal</a> 
   <a style="float:right;" href="logout">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i class="fa fa-bars"></i>
+    <em class="fa fa-bars"></em>
   </a>
 </div>
   
