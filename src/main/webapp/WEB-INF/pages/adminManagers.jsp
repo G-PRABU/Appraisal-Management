@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE>
 <html lang="en">
 <head>
@@ -16,9 +17,9 @@
   
   
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/admin" class="active">Home</a>
+  <a href="/Appraisal-Management/admin" >Home</a>
   <a href="/Appraisal-Management/admin/employee">Employee</a>
-  <a href="/Appraisal-Management/admin/manager">Manager</a>
+  <a href="/Appraisal-Management/admin/manager" class="active">Manager</a>
   <a href="/Appraisal-Management/admin/hr">HR</a>
   <a href="/Appraisal-Management/admin/add">Admin</a>
   <a href="/Appraisal-Management/admin/profile/${admin.id} ">Profile</a>
@@ -38,11 +39,31 @@ function myFunction() {
   }
 }
 </script>
-  
-  
+  <br>
+   <a href="/Appraisal-Management/admin/manager/add"><button class="addButton">Add Manager</button></a>
+  <br>
+ <div>
+  <table class="user">
+  <caption>Managers</caption>
+  <tr>
+   <th id="id">ID</th>
+   <th id="name">NAME</th>
+   <th id="email">EMAIL</th>
+   <th id=""></th>
+  </tr>
+  <c:forEach var="manager" items="${managers}">
+    <tr>
+     <td><c:out value="${manager.id}"/></td>
+     <td><c:out value="${manager.name}"/></td>
+     <td><c:out value="${manager.email}"/></td>
+     <td><a href="/Appraisal-Management/admin/manager/get/${manager.id}">View</a></td>
+    </tr>
+  </c:forEach>
+ </table>
+ </div>
 <br><br><br>
 <div class="footer">
   <h4>Copyright @2020.</h4>
 </div>
- </body>
+  </body>
 </html>

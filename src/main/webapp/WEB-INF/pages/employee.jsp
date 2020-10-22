@@ -36,6 +36,8 @@ function myFunction() {
   }
 }
 </script>
+
+<h1>Hello ${user} </h1>
 <br><br><br>
 <div class="footer">
   <h4>Copyright @2020.</h4>

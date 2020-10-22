@@ -1,5 +1,6 @@
 package com.mycompany.app.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,9 +27,10 @@ public class WebController {
 	}
 	
 	@GetMapping("/employee")
-	public ModelAndView showEmployee() {
+	public ModelAndView showEmployee(Authentication authentication) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employee");
+		mv.addObject("user", authentication.getName());
 		return mv;
 	}
 	
@@ -43,14 +45,6 @@ public class WebController {
 	public ModelAndView showHr() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("hr");
-		return mv;
-	}
-	
-	
-	@GetMapping("/admin")
-	public ModelAndView admin() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("admin");
 		return mv;
 	}
 	

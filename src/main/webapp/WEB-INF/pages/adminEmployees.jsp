@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE>
 <html lang="en">
 <head>
@@ -16,8 +17,8 @@
   
   
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/admin" class="active">Home</a>
-  <a href="/Appraisal-Management/admin/employee">Employee</a>
+  <a href="/Appraisal-Management/admin">Home</a>
+  <a href="/Appraisal-Management/admin/employee" class="active">Employee</a>
   <a href="/Appraisal-Management/admin/manager">Manager</a>
   <a href="/Appraisal-Management/admin/hr">HR</a>
   <a href="/Appraisal-Management/admin/add">Admin</a>
@@ -38,11 +39,31 @@ function myFunction() {
   }
 }
 </script>
-  
-  
+ <br>
+   <a href="/Appraisal-Management/admin/employee/add"><button class="addButton">Add Employee</button></a>
+ <br>
+ <div>
+ <table class="user">
+  <caption>Employees</caption>
+  <tr>
+   <th id="id">ID</th>
+   <th id="name">NAME</th>
+   <th id="email">EMAIL</th>
+   <th id=""></th>
+  </tr>
+  <c:forEach var="employee" items="${employees}">
+    <tr>
+     <td><c:out value="${employee.id}"/></td>
+     <td><c:out value="${employee.name}"/></td>
+     <td><c:out value="${employee.email}"/></td>
+     <td><a href="/Appraisal-Management/admin/employee/get/${employee.id}">View</a></td>
+    </tr>
+  </c:forEach>
+ </table>
+ </div>
 <br><br><br>
 <div class="footer">
   <h4>Copyright @2020.</h4>
 </div>
- </body>
+  </body>
 </html>
