@@ -1,8 +1,9 @@
 <!DOCTYPE>
-<html lang="en">
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="mvc" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html lang="en">
 <head>
-<title>HR Dashboard</title>
+<title>Employee Goal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style><%@include file="/WEB-INF/css/style.css"%></style>
@@ -14,55 +15,48 @@
   <h1>APPRAISAL MANAGEMENT SYSTEM</h1>
   <p>A system to provide appraisal to employees.</p>
 </div>
-  
-  
-  
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/hr" class="active">Home</a>
-  <a href="hr/goals">Goal</a>
-  <a href="hr/profile">Profile</a> 
-  <a style="float:right;" href="logout">Logout</a>
+  <a href="/Appraisal-Management/employee" >Home</a>
+  <a href="/Appraisal-Management/employee/goals" class="active">Goal</a>
+    <a href="/Appraisal-Management/employee/manager">Manager</a>
+  <a href="/Appraisal-Management/employee/profile">Profile</a> 
+  <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+    <a style="float:right;" href="/Appraisal-Management/employee">Back</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
 </div>
-  <br>
-  <h3>MANAGER DETAILS</h3>
-  
-  <br>
+  <br>  
+<h2>GOALS IN THE SYSTEM</h2>
+ <br>
   <div style="margin:0px 400px">
-   <form method="get" action="/Appraisal-Management/hr/searchManager">
+  <form method="get" action="/Appraisal-Management/employee/search">
   	<input type="text" name="keyword"/> &nbsp;
   	<input type="submit" value="Search"/>
-  	
   </form>
   </div>
   <br><br><br>
 <table class="user">
 <caption></caption>
 <tr>
-<th id="">MANAGER ID</th>
-<th id="">MANAGER NAME</th>
-<th id="">MANAGER PHONE</th>
-<th id="">MANAGER EMAIL</th>
-<th id="">VIEW</th>
-
+<th id="">GOAL ID</th>
+<th id="" >GOAL NAME</th>
+<th id="">GOAL DESCRIPTION</th>
+<th id="">GOAL DURATION</th>
+<th id="">ADD</th>
 </tr>
-<c:forEach var="m" items="${manager}">
+<c:forEach var="g" items="${goal}">
 <tr>
-<c:if test="${m.id >0 }">
-<td>${m.id }</td>
-<td>${m.name }</td>
-<td>${m.phone}</td>
-<td>${m.email }</td>
-<td><a href="/Appraisal-Management/hr/viewManager/${m.id}">VIEW</a></td>
+<c:if test="${g.goalId >0 }">
+<td>${g.goalId }</td>
+<td>${g.goalName }</td>
+<td>${g.goalDescription}</td>
+<td>${g.goalDuration }</td>
+<td><a href="/Appraisal-Management/employee/add/${g.goalId}">ADD</a></td>
 </c:if>
 </tr>
 </c:forEach>
 </table> 
-  
-  
-  <br><br>
   <script>
 function myFunction() {
   var x = document.getElementById("myTopnav");

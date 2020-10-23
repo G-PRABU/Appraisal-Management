@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mycompany.app.service.AdminServiceImpl;
 
@@ -24,28 +23,6 @@ public class WebController {
 	@GetMapping("/emp")
 	public String showSample() {
 		return "Sample";
-	}
-	
-	@GetMapping("/employee")
-	public ModelAndView showEmployee(Authentication authentication) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("employee");
-		mv.addObject("user", authentication.getName());
-		return mv;
-	}
-	
-	@GetMapping("/manager")
-	public ModelAndView showManager() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("manager");
-		return mv;
-	}
-	
-	@GetMapping("/hr")
-	public ModelAndView showHr() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("hr");
-		return mv;
 	}
 	
 	@GetMapping("/logout")

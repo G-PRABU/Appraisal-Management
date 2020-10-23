@@ -36,6 +36,8 @@ public class AssignedGoal {
 	
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
+	
+    private boolean goalStatus;
     
 	public void setAssignedGoalId(Long id) {
 		assignedGoalId = id;
@@ -45,7 +47,7 @@ public class AssignedGoal {
 		this.employee = employee;
 	}
 	
-	public void setGoalId(Goal goal) {
+	public void setGoal(Goal goal) {
 		this.goal = goal;
 	}
 	
@@ -61,6 +63,10 @@ public class AssignedGoal {
 		endDate = date;
 	}
 	
+	public void setGoalStatus(boolean goalStatus) {
+		this.goalStatus = goalStatus;
+	}
+	
 	public Long getAssignedGoalId() {
 		return assignedGoalId;
 	}
@@ -69,7 +75,7 @@ public class AssignedGoal {
 		return employee;
 	}
 	
-	public Goal getGoalId() {
+	public Goal getGoal() {
 		return goal;
 	}
 	
@@ -84,4 +90,9 @@ public class AssignedGoal {
 	public Date getEndDate() {
 		return endDate;
 	}
+	
+	public boolean isGoalStatus() {
+		return goalStatus;
+	}
+    	
 }

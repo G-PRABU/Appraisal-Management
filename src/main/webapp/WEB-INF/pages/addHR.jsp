@@ -56,7 +56,7 @@ function myFunction() {
          <label for="dob">DOB</label>
        </div>
        <div class="col-75">
-         <form:input path="dob" />
+         <form:input path="dob" type="date"/>
        </div>
      </div>
      <div class="row">

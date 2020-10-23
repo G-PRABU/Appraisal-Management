@@ -8,11 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.mycompany.app.model.Employee;
+import com.mycompany.app.model.Manager;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     public Optional<Employee> findByEmail(String username); 
 
-	@Query("select e from Employee e where " + "lower(e.name) like lower(concat('%',:name,'%')) or lower(e.email) like lower(concat('%',:name,'%'))" )
-	public List<Employee> findByName(@Param("name") String name);
+    public List<Employee> findByManager(Manager manager);
+    
+    @Query(value="SELECT e from Employee e where e.name LIKE '%' || :keyword || '%' " + "OR e.email LIKE '%' || :keyword  || '%'")
+	public List<Employee> searchEmployee(@Param("keyword") String keyword);
+    
 
 }

@@ -22,7 +22,7 @@ public class AdminController {
 	@Autowired
 	AdminServiceImpl adminService;
 	
-	private final static String ADMIN = "admin";
+	private static final String ADMIN = "admin";
 	
 	/* Admin */
 	
@@ -64,6 +64,8 @@ public class AdminController {
 		admin.setAuthorization(authorization);
 		return admin;
 	}
+	
+	
 	
 	
 	/*  Employees  */
@@ -171,6 +173,7 @@ public class AdminController {
 		manager.setHr(new HR());
 		return manager;
 	}
+	
 	
 	
 	

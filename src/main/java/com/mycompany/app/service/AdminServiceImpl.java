@@ -84,7 +84,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<Employee> searchEmployee(String name) {		
-		return employeeRepository.findByName(name);
+		return employeeRepository.searchEmployee(name);
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<Manager> searchManager(String name) {
-		return managerRepository.findByName(name);
+		return managerRepository.searchManager(name);
 	}
 
 	@Override

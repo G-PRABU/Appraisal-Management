@@ -35,7 +35,7 @@ public class EmployeeDetailsService implements UserDetailsService {
 	ManagerRepository managerRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) {
 		
 		Optional<Employee> employee = employeeRepository.findByEmail(username);
 		Optional<Manager> manager = managerRepository.findByEmail(username);

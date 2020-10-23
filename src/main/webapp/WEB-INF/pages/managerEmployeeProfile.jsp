@@ -40,37 +40,50 @@ function myFunction() {
 
 <br>
 
-<div style="margin: 0 auto;" tm="5">
-<form method="get" action="search">
-		<input type="text" name="keyword" /> &nbsp;
-		<input type="submit" value="Search" />
-	</form>
-	</div>
-	<TABLE class="user" >
-		<div style="margin: 0 auto;">
-			<TR>
-				<TH id=1><h6>ID</h6></TH>
-				<TH id=2><h6>DOB</h6></TH>
-				<TH id=3><h6>EMAIL</h6></TH>
-				<TH id=4><h6>NAME</h6></TH>
-				<TH id=5><h6>VIEW</h6></TH>
-			</TR>
-			
-			<h1>Employee List</h1>
-		<c:forEach items="${listEmployee}" var="employee">
-				<tr>
-					<td><c:out value="${employee.id}"/></td>
-					<td><c:out value="${employee.dob}"/></td>
-					<td><c:out value="${employee.email}"/></td>
-					<td><c:out value="${employee.name}"/></td>
-					<td><a href="/Appraisal-Management/manager/viewprofile?id=${employee.id}">ViewProfile</a></td>
-				</tr> 
-		</c:forEach>
-			${manager.id }
-			${manager.name }
-			${manager.dob }
-		</div>
-	</TABLE>
+ <div class="container">
+   <div class="row">
+    <div class="col-25">
+     <h3>Id</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.id}"/></h3>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-25">
+     <h3>Name</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.name}"/></h3>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-25">
+     <h3>DOB</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.dob}"/></h3>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-25">
+     <h3>Email</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.email}"/></h3>
+    </div>
+   </div> 
+   <div class="row">
+    <div class="col-25">
+     <h3>View Goals</h3>
+    </div>
+    <div class="col-75">
+     <h3><a href="/Appraisal-Management/manager/viewgoals?id=${employee.id}">ViewGoals</a></h3>
+    </div>
+   </div> 
+ </div>
+
+
 	
 <br><br><br>
 <div class="footer">

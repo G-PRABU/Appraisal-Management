@@ -2,7 +2,7 @@
 <html lang="en">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
-<title>Employee Dashboard</title>
+<title>HR Manager</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style><%@include file="/WEB-INF/css/style.css"%></style>
@@ -18,52 +18,52 @@
   
   
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/employee" class="active">Home</a>
-    <a href="/Appraisal-Management/employee/goals">Goal</a>
-  <a href="/Appraisal-Management/employee/manager">Manager</a>
-  <a href="/Appraisal-Management/employee/profile">Profile</a>
-  <a style="float:right;" href="logout">Logout</a>
+  <a href="/Appraisal-Management/hr" class="active" >Home</a>
+  <a href="/Appraisal-Management/hr/goals" >Goal</a>
+  <a href="/Appraisal-Management/hr/profile">Profile</a> 
+  <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+    <a style="float:right;" href="/Appraisal-Management/hr">Back</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
 </div>
-
-
-<br>
-
-<h2>Selected Goals</h2>
-
-<br>
-
+  <br>
+  <h3>EMPLOYEES DETAILS</h3>
+  
+  <br>
+  <div style="margin:0px 400px">
+   <form method="get" action="/Appraisal-Management/hr/searchEmployee">
+  	<input type="text" name="keyword"/> &nbsp;
+  	<input type="submit" value="Search"/>
+  	
+  </form>
+  </div>
+  <br><br><br>
 <table class="user">
 <caption></caption>
 <tr>
-<th id="">ASSIGNED GOAL ID</th>
-<th id="">GOAL NAME</th>
-<th id="">GOAL START DATE</th>
-<th id="">GOAL END DATE</th>
-<th id="">GOAL STATUS</th>
-<th id="">MARK AS COMPLETE</th>
+<th id="">EMPLOYEE ID</th>
+<th id="">EMPLOYEE NAME</th>
+<th id="">EMPLOYEE PHONE</th>
+<th id="">EMPLOYEE EMAIL</th>
+<th id="">VIEW</th>
+
 </tr>
-<c:forEach var="g" items="${a}">
+<c:forEach var="m" items="${employee}">
 <tr>
-<c:if test="${g.assignedGoalId >0 }">
-<td>${g.assignedGoalId }</td>
-<td>${g.goal.goalName }</td>
-<td>${g.startDate}</td>
-<td>${g.endDate}</td>
-<c:if test="${g.goalStatus==true }">
-<td>GOAL COMPLETED</td>
-<td>COMPLETED</td>
-</c:if>
-<c:if test="${g.goalStatus==false }">
-<td>IN PROGRESS</td>
-<td><a href="/Appraisal-Management/employee/complete/${g.assignedGoalId }">MARK AS COMPLETE</a></td>
-</c:if>
+<c:if test="${m.id >0 }">
+<td>${m.id }</td>
+<td>${m.name }</td>
+<td>${m.phone}</td>
+<td>${m.email }</td>
+<td><a href="/Appraisal-Management/hr/view/${m.id}">VIEW</a></td>
 </c:if>
 </tr>
 </c:forEach>
-</table>
+</table> 
+  
+  
+  <br><br>
   <script>
 function myFunction() {
   var x = document.getElementById("myTopnav");

@@ -18,7 +18,7 @@
   
   
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/manager" class="active">Home</a>
+  <a href="/Appraisal-Management/manager/" class="active">Home</a>
   <a href="/Appraisal-Management/manager/manager_profile/${manager.id}">Profile</a>
   <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -40,35 +40,32 @@ function myFunction() {
 
 <br>
 
-<div style="margin: 0 auto;" tm="5">
+<div align="center" tm="5">
 <form method="get" action="search">
 		<input type="text" name="keyword" /> &nbsp;
 		<input type="submit" value="Search" />
 	</form>
 	</div>
 	<TABLE class="user" >
-		<div style="margin: 0 auto;">
+		<div align="center">
 			<TR>
-				<TH id=1><h6>ID</h6></TH>
-				<TH id=2><h6>DOB</h6></TH>
-				<TH id=3><h6>EMAIL</h6></TH>
-				<TH id=4><h6>NAME</h6></TH>
-				<TH id=5><h6>VIEW</h6></TH>
+				<TH><h6>ID</h6></TH>
+				<TH><h6>DOB</h6></TH>
+				<TH><h6>EMAIL</h6></TH>
+				<TH><h6>NAME</h6></TH>
+				<TH><h6>VIEW</h6></TH>
 			</TR>
 			
 			<h1>Employee List</h1>
-		<c:forEach items="${listEmployee}" var="employee">
+		<c:forEach items="${result}" var="employee">
 				<tr>
 					<td><c:out value="${employee.id}"/></td>
 					<td><c:out value="${employee.dob}"/></td>
 					<td><c:out value="${employee.email}"/></td>
 					<td><c:out value="${employee.name}"/></td>
-					<td><a href="/Appraisal-Management/manager/viewprofile?id=${employee.id}">ViewProfile</a></td>
+					<td><a href="viewprofile?id=${manager.id}">ViewProfile</a></td>
 				</tr> 
 		</c:forEach>
-			${manager.id }
-			${manager.name }
-			${manager.dob }
 		</div>
 	</TABLE>
 	
