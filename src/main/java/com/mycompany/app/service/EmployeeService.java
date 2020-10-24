@@ -14,7 +14,7 @@ public interface EmployeeService {
 
 	Goal getGoal(Long id);
 
-	void assignGoal(Employee employee, Goal goal, int goalDuration);
+	void assignGoal(Employee employee, Goal goal);
 
 	void completeGoal(long id);
 

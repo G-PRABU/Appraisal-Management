@@ -69,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void assignGoal(Employee employee,Goal goal,int goalDuration)
+	public void assignGoal(Employee employee,Goal goal)
 	{
 		AssignedGoal assignGoal=new AssignedGoal();
 		assignGoal.setEmployee(employee);
@@ -83,6 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		assignedGoalRepository.save(assignGoal);
 		
 	}
+	
 	public Manager getManager(Employee employee) {
 		
 		return employee.getManager();

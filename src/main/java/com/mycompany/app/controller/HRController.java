@@ -1,6 +1,8 @@
 package com.mycompany.app.controller;
 
 import java.util.List;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import com.mycompany.app.model.Employee;
 import com.mycompany.app.model.Goal;
 import com.mycompany.app.model.HR;
 import com.mycompany.app.model.Manager;
+import com.mycompany.app.pojo.GoalPOJO;
 import com.mycompany.app.service.EmployeeServiceImpl;
 import com.mycompany.app.service.HRServiceImpl;
 
@@ -131,7 +134,7 @@ public class HRController {
 	
 	
 	@GetMapping(value="hr/edit/{id}")
-	public ModelAndView editGoal(@PathVariable long id,@ModelAttribute("goal") Goal goal,BindingResult result,ModelAndView mv)
+	public ModelAndView editGoal(@PathVariable long id,ModelAndView mv)
 	{
 		Goal g=hrService.getGoal(id);
 		mv.addObject("goalId",id);
@@ -161,7 +164,7 @@ public class HRController {
 	
 	
 	@GetMapping("/hr/add")
-	public ModelAndView addGoals(@ModelAttribute("goal") Goal goal,BindingResult result,ModelAndView mv)
+	public ModelAndView addGoals(ModelAndView mv)
 	{
 		int[] months= {1,2,3,4,5,6};
 		
@@ -169,34 +172,40 @@ public class HRController {
 		mv.setViewName("HrAddGoal");
 		return mv;
 	}
+	
+	
 	@ModelAttribute("goal")
-	public Goal setGoal()
+	public GoalPOJO setGoal()
 	{
-		return (new Goal());
+		return new GoalPOJO();
 	}
 	
 	
 	@PostMapping("/hr/addgoal")
-	public ModelAndView addGoal(@ModelAttribute("goal") Goal goal,BindingResult result,ModelAndView mv)
+	public ModelAndView addGoal(@ModelAttribute("goal") GoalPOJO goal,BindingResult result,ModelAndView mv)
 
-	{		
-		hrService.saveGoal(goal);
+	{	
+		Goal g = new Goal();
+		BeanUtils.copyProperties(goal,g);
+		hrService.saveGoal(g);
 		List<Goal> goals=hrService.getAllGoals();
 		mv.addObject("goal",goals);
 		mv.setViewName(page);
 		return mv;
 	}
+	
 	@PostMapping("/hr/addgoal/{goalId}")
-	public ModelAndView updateGoal(@ModelAttribute("goal") Goal goal,BindingResult result,ModelAndView mv)
+	public ModelAndView updateGoal(@ModelAttribute("goal") GoalPOJO goal,BindingResult result,ModelAndView mv)
 
-	{		
-		hrService.updateGoal(goal);
+	{	
+		Goal g = new Goal();
+		BeanUtils.copyProperties(goal,g);
+		hrService.updateGoal(g);
 		List<Goal> goals=hrService.getAllGoals();
 		mv.addObject("goal",goals);
 		mv.setViewName(page);
 		return mv;
 	}
 	
-	
-	
+		
 }

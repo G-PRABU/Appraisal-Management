@@ -1,22 +1,16 @@
 package com.mycompany.app.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mycompany.app.model.AssignedGoal;
 import com.mycompany.app.model.Employee;
 import com.mycompany.app.model.Goal;
-import com.mycompany.app.model.Manager;
 import com.mycompany.app.service.EmployeeServiceImpl;
 
 @Controller
@@ -31,14 +25,9 @@ public class EmployeeController {
 		@GetMapping("/employee")
 		public ModelAndView showEmployee(Authentication authentication) {
 		ModelAndView mv = new ModelAndView();
-		
 		String username=authentication.getName();
-		
-		Employee employee=employeeService.getEmployee(username);
-		
-		List<AssignedGoal> assignedGoal=employeeService.getAllAssignedGoal(employee);
-		
-		mv.addObject("a",assignedGoal);
+		Employee employee=employeeService.getEmployee(username);	
+		mv.addObject("a",employeeService.getAllAssignedGoal(employee));
 		mv.setViewName(pageEmp);
 		return mv;
 	}
@@ -47,16 +36,10 @@ public class EmployeeController {
 	public ModelAndView completeGoal(@PathVariable long id,Authentication authentication)
 	{
 		ModelAndView mv=new ModelAndView();
-		
 		String username=authentication.getName();
-		
 		Employee employee=employeeService.getEmployee(username);
-		
 		employeeService.completeGoal(id);
-		
-		List<AssignedGoal> assignedGoal=employeeService.getAllAssignedGoal(employee);
-		
-		mv.addObject("a",assignedGoal);
+		mv.addObject("a",employeeService.getAllAssignedGoal(employee));
 		mv.setViewName(pageEmp);
 		return mv;
 	}
@@ -78,8 +61,7 @@ public class EmployeeController {
 	public ModelAndView showGoals()
 	{
 		ModelAndView mv = new ModelAndView();
-		List<Goal> goals=employeeService.getAllGoals();
-		mv.addObject("goal",goals);
+		mv.addObject("goal",employeeService.getAllGoals());
 		mv.setViewName(page);
 		return mv;
 	}
@@ -88,8 +70,7 @@ public class EmployeeController {
 	public ModelAndView searchGoal(@RequestParam String keyword)
 	{
 		ModelAndView mv=new ModelAndView();
-		List<Goal> goals=employeeService.search(keyword);
-		mv.addObject("goal",goals);
+		mv.addObject("goal",employeeService.search(keyword));
 		mv.setViewName(page);
 		
 		return mv;
@@ -103,36 +84,24 @@ public class EmployeeController {
 	{
 		ModelAndView mv = new ModelAndView();
 		String username=authentication.getName();
-		
 		Employee employee=employeeService.getEmployee(username);
-		Manager manager=employeeService.getManager(employee);
-		mv.addObject("manager",manager);
+		mv.addObject("manager",employeeService.getManager(employee));
 		mv.setViewName("EmployeeManager");
 		return mv;
 	}
 	
 	
 	@GetMapping("employee/add/{goalId}")
-	public ModelAndView addGoal(@ModelAttribute("goal") Goal goal,BindingResult result,ModelAndView mv,Authentication authentication,@PathVariable long goalId)
+	public ModelAndView addGoal(ModelAndView mv,Authentication authentication,@PathVariable long goalId)
 	{
 		
 		String username=authentication.getName();
-		
 		Employee employee=employeeService.getEmployee(username);
-		
 		Goal g=employeeService.getGoal(goalId);
-		
-		employeeService.assignGoal(employee,goal,g.getGoalDuration());
-		
-		List<Goal> goals=employeeService.getAllGoals();
-		mv.addObject("goal",goals);
+		employeeService.assignGoal(employee,g);
+		mv.addObject("goal",employeeService.getAllGoals());
 		mv.setViewName(page);
 		return mv;
-	}
-	@ModelAttribute("goal")
-	public Goal setGoal()
-	{
-		return new Goal();
 	}
 	
 }

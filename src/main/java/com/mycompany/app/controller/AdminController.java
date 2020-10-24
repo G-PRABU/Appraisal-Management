@@ -1,5 +1,6 @@
 package com.mycompany.app.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,10 @@ import com.mycompany.app.model.Authorization;
 import com.mycompany.app.model.Employee;
 import com.mycompany.app.model.HR;
 import com.mycompany.app.model.Manager;
+import com.mycompany.app.pojo.AdminPOJO;
+import com.mycompany.app.pojo.EmployeePOJO;
+import com.mycompany.app.pojo.HRPOJO;
+import com.mycompany.app.pojo.ManagerPOJO;
 import com.mycompany.app.service.AdminServiceImpl;
 
 @Controller
@@ -51,14 +56,16 @@ public class AdminController {
 	}
 	
 	@PostMapping("admin/create")
-	public String createAdmin(@ModelAttribute("a") Admin admin) {
-		adminService.saveAdmin(admin);
+	public String createAdmin(@ModelAttribute("a") AdminPOJO admin) {
+		Admin a = new Admin();
+		BeanUtils.copyProperties(admin,a);
+		adminService.saveAdmin(a);
 		return "redirect:/admin";
 	}
 	
 	@ModelAttribute("a")
-	public Admin getAdminObject() {
-		Admin admin = new Admin();
+	public AdminPOJO getAdminObject() {
+		AdminPOJO admin = new AdminPOJO();
 		Authorization authorization = new Authorization();
 		authorization.setAuthorizedRole(adminService.getRole("ADMIN"));
 		admin.setAuthorization(authorization);
@@ -99,8 +106,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("admin/employee/create")
-	public String createEmployee(@ModelAttribute("employee") Employee employee) {
-		adminService.saveEmployee(employee);
+	public String createEmployee(@ModelAttribute("employee") EmployeePOJO employee) {
+		Employee e = new Employee();
+		BeanUtils.copyProperties(employee,e);
+		adminService.saveEmployee(e);
 		return "redirect:/admin/employee";
 	}
 	
@@ -111,8 +120,8 @@ public class AdminController {
 	}
 	
 	@ModelAttribute("employee")
-	public Employee getEmployeeObject() {
-		Employee employee = new Employee();
+	public EmployeePOJO getEmployeeObject() {
+		EmployeePOJO employee = new EmployeePOJO();
 		Authorization authorization = new Authorization();
 		authorization.setAuthorizedRole(adminService.getRole("EMPLOYEE"));
 		employee.setAuthorization(authorization);
@@ -153,8 +162,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("admin/manager/create")
-	public String createManager(@ModelAttribute("manager") Manager manager) {
-		adminService.saveManager(manager);
+	public String createManager(@ModelAttribute("manager") ManagerPOJO manager) {
+		Manager m = new Manager();
+		BeanUtils.copyProperties(manager,m);
+		adminService.saveManager(m);
 		return "redirect:/admin/manager";
 	}
 	
@@ -165,8 +176,8 @@ public class AdminController {
 	}
 	
 	@ModelAttribute("manager")
-	public Manager getManagerObject() {
-		Manager manager = new Manager();
+	public ManagerPOJO getManagerObject() {
+		ManagerPOJO manager = new ManagerPOJO();
 		Authorization authorization = new Authorization();
 		authorization.setAuthorizedRole(adminService.getRole("MANAGER"));
 		manager.setAuthorization(authorization);
@@ -206,8 +217,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("admin/hr/create")
-	public String createHR(@ModelAttribute("hr") HR hr) {
-		adminService.saveHR(hr);
+	public String createHR(@ModelAttribute("hr") HRPOJO hr) {
+		HR h = new HR();
+		BeanUtils.copyProperties(hr,h);
+		adminService.saveHR(h);
 		return "redirect:/admin/hr";
 	}
 	
@@ -218,8 +231,8 @@ public class AdminController {
 	}
 	
 	@ModelAttribute("hr")
-	public HR getHRObject() {
-		HR hr = new HR();
+	public HRPOJO getHRObject() {
+		HRPOJO hr = new HRPOJO();
 		Authorization authorization = new Authorization();
 		authorization.setAuthorizedRole(adminService.getRole("HR"));
 		hr.setAuthorization(authorization);
