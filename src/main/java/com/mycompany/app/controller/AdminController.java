@@ -4,12 +4,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mycompany.app.exception.HRMappedException;
+import com.mycompany.app.exception.ManagerMappedException;
 import com.mycompany.app.model.Admin;
 import com.mycompany.app.model.Authorization;
 import com.mycompany.app.model.Employee;
@@ -28,6 +31,9 @@ public class AdminController {
 	AdminServiceImpl adminService;
 	
 	private static final String ADMIN = "admin";
+	private static final String MESSAGE = "message";
+	private static final String HR_MAPPED_EXCEPTION = "HR has assigned to the managers";
+	private static final String MANAGER_MAPPED_EXCEPTION = "Manager has assigned to the employees";
 	
 	/* Admin */
 	
@@ -170,8 +176,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/manager/delete/{id}")
-	public String deleteManager(@PathVariable("id") Long id) {
-		adminService.deleteManager(id);
+	public String deleteManager(@PathVariable("id") Long id) throws ManagerMappedException {
+		boolean isDeleted = adminService.deleteManager(id);
+		if(!isDeleted) {
+			throw new ManagerMappedException(id);
+		}
 		return "redirect:/admin/manager";
 	}
 	
@@ -225,8 +234,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("admin/hr/delete/{id}")
-	public String deleteHR(@PathVariable("id") Long id) {
-		adminService.deleteHR(id);
+	public String deleteHR(@PathVariable("id") Long id) throws HRMappedException {
+		boolean isDeleted = adminService.deleteHR(id);
+		if(!isDeleted) {
+			throw new HRMappedException(id);
+		}
 		return "redirect:/admin/hr";
 	}
 	
@@ -238,4 +250,25 @@ public class AdminController {
 		hr.setAuthorization(authorization);
 		return hr;
 	}
+	
+	
+	
+	//Exception Handlers 
+	
+	@ExceptionHandler(HRMappedException.class)
+	public ModelAndView hrMappedExceptionHandler() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("AdminExceptionHandler");
+		mv.addObject(MESSAGE, HR_MAPPED_EXCEPTION);
+		return mv;
+	}
+	
+	@ExceptionHandler(ManagerMappedException.class)
+	public ModelAndView managerMappedExceptionHandler() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("AdminExceptionHandler");
+		mv.addObject(MESSAGE, MANAGER_MAPPED_EXCEPTION);
+		return mv;
+	}
+	
 }

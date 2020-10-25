@@ -16,9 +16,9 @@ public interface HRService {
 
 	Goal getGoal(Long id);
 
-	void deleteGoal(Goal g);
+	boolean deleteGoal(Long id);
 
-	void updateGoal(Goal g);
+	boolean updateGoal(Goal g);
 
 	HR getHr(String username);
 

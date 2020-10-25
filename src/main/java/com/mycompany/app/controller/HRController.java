@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mycompany.app.exception.GoalAssignedException;
 import com.mycompany.app.model.AssignedGoal;
 import com.mycompany.app.model.Employee;
 import com.mycompany.app.model.Goal;
@@ -38,6 +40,8 @@ public class HRController {
 	String page="HrGoal";
 	String obj="employee";
 	
+	private static final String MESSAGE = "message";
+	private static final String GOAL_ASSIGNED_EXCEPTION = "Goal has been assigned to the Employee.";
 	
 	@GetMapping("/hr")
 	public ModelAndView showHr(Authentication authentication) {
@@ -121,15 +125,13 @@ public class HRController {
 	
 	
 	@GetMapping(value="hr/delete/{id}")
-	public ModelAndView delGoal(@PathVariable long id)
+	public String deleteGoal(@PathVariable long id) throws GoalAssignedException 
 	{
-		ModelAndView mv=new ModelAndView();	
-		Goal goal=hrService.getGoal(id);
-		hrService.deleteGoal(goal);
-		List<Goal> goals=hrService.getAllGoals();
-		mv.addObject("goal",goals);
-		mv.setViewName(page);
-		return mv;
+		boolean isDeleted = hrService.deleteGoal(id);
+		if(!isDeleted) {
+			throw new GoalAssignedException(id);
+		}
+		return "redirect:/hr/goals";
 	}
 	
 	
@@ -207,5 +209,12 @@ public class HRController {
 		return mv;
 	}
 	
+	@ExceptionHandler(GoalAssignedException.class)
+	public ModelAndView hrMappedExceptionHandler() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("hrExceptionHandler");
+		mv.addObject(MESSAGE, GOAL_ASSIGNED_EXCEPTION);
+		return mv;
+	}
 		
 }

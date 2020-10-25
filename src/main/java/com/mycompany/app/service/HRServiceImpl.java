@@ -9,6 +9,7 @@ import com.mycompany.app.model.Employee;
 import com.mycompany.app.model.Goal;
 import com.mycompany.app.model.HR;
 import com.mycompany.app.model.Manager;
+import com.mycompany.app.repository.AssignedGoalRepository;
 import com.mycompany.app.repository.EmployeeRepository;
 import com.mycompany.app.repository.GoalRepository;
 import com.mycompany.app.repository.HRRepository;
@@ -28,6 +29,9 @@ public class HRServiceImpl implements HRService {
 	
 	@Autowired
 	ManagerRepository managerRepository;
+
+	@Autowired
+	AssignedGoalRepository assignedGoalRepository;
 	
 	@Override
 	public List<Goal> getAllGoals() {
@@ -86,18 +90,33 @@ public class HRServiceImpl implements HRService {
 		}
 	}
 	@Override
-	public void deleteGoal(Goal g)
+	public boolean deleteGoal(Long id)
 	{
-		goalRepository.delete(g);
+		Optional<Goal> goal = goalRepository.findById(id);
+		if(goal.isPresent()) {
+	        if(!assignedGoalRepository.findByGoal(goal.get()).isEmpty()) {
+	        	return false;
+	        }
+		    goalRepository.deleteById(id);	
+		    return true;
+		} else {
+			return false;
+		}
 	}
+	
 	@Override
-	public void updateGoal(Goal g)
+	public boolean updateGoal(Goal g)
 	{
-		Goal temp=getGoal(g.getGoalId());
-		temp.setGoalName(g.getGoalName());
-		temp.setGoalDescription(g.getGoalDescription());
-		temp.setGoalDuration(g.getGoalDuration());
-		goalRepository.save(temp);
+		try {
+		    Goal temp=getGoal(g.getGoalId());
+		    temp.setGoalName(g.getGoalName());
+		    temp.setGoalDescription(g.getGoalDescription());
+		    temp.setGoalDuration(g.getGoalDuration());
+		    goalRepository.save(temp);
+		} catch(Exception e) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override

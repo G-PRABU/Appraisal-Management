@@ -2,7 +2,7 @@ package com.mycompany.app.pojo;
 
 import com.mycompany.app.model.Authorization;
 
-public class AdminPOJO {
+public class AdminPOJO extends PersonPOJO {
 
 	private Authorization authorization;
 	

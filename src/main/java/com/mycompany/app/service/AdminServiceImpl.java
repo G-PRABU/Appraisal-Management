@@ -104,6 +104,10 @@ public class AdminServiceImpl implements AdminService{
 	public boolean deleteHR(Long id) {
 		Optional<HR> hr = hrRepository.findById(id);
 		if(hr.isPresent()) {
+			List<Manager> managers = managerRepository.findByHr(hr.get());
+			if(!managers.isEmpty()) {
+				return false;
+			}
 			hrRepository.deleteById(id);
 			authorizationRepository.delete(hr.get().getAuthorization());
 			return true;
@@ -147,6 +151,10 @@ public class AdminServiceImpl implements AdminService{
 	public boolean deleteManager(Long id) {
 		Optional<Manager> manager = managerRepository.findById(id);
 		if(manager.isPresent()) {
+			List<Employee> employees = employeeRepository.findByManager(manager.get());
+			if(!employees.isEmpty()) {
+				return false;
+			}
 			managerRepository.deleteById(id);
 			authorizationRepository.delete(manager.get().getAuthorization());
 			return true;
