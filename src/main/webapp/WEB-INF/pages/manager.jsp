@@ -39,14 +39,17 @@ function myFunction() {
 
 
 <br>
-
-<div style="margin: 0 auto;" tm="5">
+<div style="margin:0px 400px">
 <form method="get" action="search">
 		<input type="text" name="keyword" /> &nbsp;
 		<input type="submit" value="Search" />
 	</form>
 	</div>
+	<br><br>
+				<h2>Employee List</h2>
+	
 	<TABLE class="user" >
+	<caption></caption>
 		<div style="margin: 0 auto;">
 			<TR>
 				<TH id=1><h6>ID</h6></TH>
@@ -56,7 +59,6 @@ function myFunction() {
 				<TH id=5><h6>VIEW</h6></TH>
 			</TR>
 			
-			<h1>Employee List</h1>
 		<c:forEach items="${listEmployee}" var="employee">
 				<tr>
 					<td><c:out value="${employee.id}"/></td>

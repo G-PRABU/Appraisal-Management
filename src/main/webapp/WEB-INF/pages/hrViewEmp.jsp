@@ -85,7 +85,7 @@
 <th id="">GOAL START DATE</th>
 <th id="">GOAL END DATE</th>
 <th id="">GOAL STATUS</th>
-<th id="">GOAL RATING</th>
+<th id="">TOTAL SCORE</th>
 </tr>
 <c:forEach var="g" items="${a}">
 <tr>
@@ -97,11 +97,20 @@
 
 <c:if test="${g.goalStatus==true }">
 <td>GOAL COMPLETED</td>
+
+<c:if test="${g.goalRating==null }">
+<td>Yet to be Reviewed</td>
+</c:if>
+
+<c:if test="${g.goalRating.totalScore>0 }">
+<td>${g.goalRating.totalScore}</td>
+</c:if>
+
 </c:if>
 <c:if test="${g.goalStatus==false }">
 <td>IN PROGRESS</td>
+<td></td>
 </c:if>
-<td>${g.goalRating }</td>
 </c:if>
 </tr>
 </c:forEach>

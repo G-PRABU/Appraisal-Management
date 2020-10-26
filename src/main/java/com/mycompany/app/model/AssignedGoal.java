@@ -51,7 +51,7 @@ public class AssignedGoal {
 		this.goal = goal;
 	}
 	
-	public void setGoalRatingId(GoalRating goalRating) {
+	public void setGoalRating(GoalRating goalRating) {
 		this.goalRating = goalRating;
 	}
 	
@@ -79,7 +79,7 @@ public class AssignedGoal {
 		return goal;
 	}
 	
-	public GoalRating getGoalRatingId() {
+	public GoalRating getGoalRating() {
 		return goalRating;
 	}
 	

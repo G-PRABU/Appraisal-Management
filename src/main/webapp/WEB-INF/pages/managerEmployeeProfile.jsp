@@ -21,6 +21,7 @@
   <a href="/Appraisal-Management/manager" class="active">Home</a>
   <a href="/Appraisal-Management/manager/manager_profile/${manager.id}">Profile</a>
   <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+    <a style="float:right;" href="/Appraisal-Management/manager">Back</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
@@ -46,7 +47,7 @@ function myFunction() {
      <h3>Id</h3>
     </div>
     <div class="col-75">
-     <h3><c:out value="${employee.id}"/></h3>
+     <p><c:out value="${employee.id}"/></p>
     </div>
    </div>
    <div class="row">
@@ -54,7 +55,7 @@ function myFunction() {
      <h3>Name</h3>
     </div>
     <div class="col-75">
-     <h3><c:out value="${employee.name}"/></h3>
+     <p><c:out value="${employee.name}"/></p>
     </div>
    </div>
    <div class="row">
@@ -62,7 +63,7 @@ function myFunction() {
      <h3>DOB</h3>
     </div>
     <div class="col-75">
-     <h3><c:out value="${employee.dob}"/></h3>
+     <p><c:out value="${employee.dob}"/></p>
     </div>
    </div>
    <div class="row">
@@ -70,20 +71,47 @@ function myFunction() {
      <h3>Email</h3>
     </div>
     <div class="col-75">
-     <h3><c:out value="${employee.email}"/></h3>
-    </div>
-   </div> 
-   <div class="row">
-    <div class="col-25">
-     <h3>View Goals</h3>
-    </div>
-    <div class="col-75">
-     <h3><a href="/Appraisal-Management/manager/viewgoals?id=${employee.id}">ViewGoals</a></h3>
+     <p><c:out value="${employee.email}"/></p>
     </div>
    </div> 
  </div>
 
+<h3>Goals Selected</h3>
+<table class="user">
+<caption></caption>
+<tr>
+<th id="">ASSIGNED GOAL ID</th>
+<th id="">GOAL NAME</th>
+<th id="">GOAL START DATE</th>
+<th id="">GOAL END DATE</th>
+<th id="">GOAL STATUS</th>
+<th id="">GOAL RATING</th>
+</tr>
+<c:forEach var="g" items="${a}">
+<tr>
+<c:if test="${g.assignedGoalId >0 }">
+<td>${g.assignedGoalId }</td>
+<td>${g.goal.goalName }</td>
+<td>${g.startDate}</td>
+<td>${g.endDate}</td>
 
+<c:if test="${g.goalStatus==true }">
+<td>GOAL COMPLETED</td>
+<c:if test="${g.goalRating== null }">
+<td><a href="/Appraisal-Management/manager/review/${employee.id}/${g.assignedGoalId }">Review Goal</a></td>
+</c:if>
+<c:if test="${g.goalRating.totalScore>0 }">
+<td>${g.goalRating.totalScore}</td>
+</c:if>
+</c:if>
+<c:if test="${g.goalStatus==false }">
+<td>IN PROGRESS</td>
+<td></td>
+</c:if>
+</c:if>
+</tr>
+</c:forEach>
+</table>
 	
 <br><br><br>
 <div class="footer">

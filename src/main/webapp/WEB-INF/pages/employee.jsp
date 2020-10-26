@@ -22,7 +22,7 @@
     <a href="/Appraisal-Management/employee/goals">Goal</a>
   <a href="/Appraisal-Management/employee/manager">Manager</a>
   <a href="/Appraisal-Management/employee/profile">Profile</a>
-  <a style="float:right;" href="logout">Logout</a>
+  <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
@@ -44,6 +44,7 @@
 <th id="">GOAL END DATE</th>
 <th id="">GOAL STATUS</th>
 <th id="">MARK AS COMPLETE</th>
+<th id="">TOTAL SCORE</th>
 </tr>
 <c:forEach var="g" items="${a}">
 <tr>
@@ -54,11 +55,20 @@
 <td>${g.endDate}</td>
 <c:if test="${g.goalStatus==true }">
 <td>GOAL COMPLETED</td>
-<td>COMPLETED</td>
+<td>ALREADY COMPLETED</td>
+<c:if test="${g.goalRating==null }">
+<td>Yet to be Reviewed</td>
+</c:if>
+
+<c:if test="${g.goalRating.totalScore>0 }">
+<td>${g.goalRating.totalScore}</td>
+</c:if>
+
 </c:if>
 <c:if test="${g.goalStatus==false }">
 <td>IN PROGRESS</td>
 <td><a href="/Appraisal-Management/employee/complete/${g.assignedGoalId }">MARK AS COMPLETE</a></td>
+<td></td>
 </c:if>
 </c:if>
 </tr>

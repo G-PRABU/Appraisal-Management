@@ -1,5 +1,6 @@
 package com.mycompany.app.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ public class AdminController {
 	@Autowired
 	AdminServiceImpl adminService;
 	
+	private static final Logger LOGGER = Logger.getLogger(AdminController.class);
 	private static final String ADMIN = "admin";
 	private static final String MESSAGE = "message";
 	private static final String HR_MAPPED_EXCEPTION = "HR has assigned to the managers";
@@ -115,7 +117,12 @@ public class AdminController {
 	public String createEmployee(@ModelAttribute("employee") EmployeePOJO employee) {
 		Employee e = new Employee();
 		BeanUtils.copyProperties(employee,e);
-		adminService.saveEmployee(e);
+		boolean isInserted = adminService.saveEmployee(e);
+		if(isInserted) {
+			LOGGER.info("Employee has been added successfully");
+		} else {
+			LOGGER.info("Employee has not added in database");
+		}
 		return "redirect:/admin/employee";
 	}
 	
@@ -171,7 +178,12 @@ public class AdminController {
 	public String createManager(@ModelAttribute("manager") ManagerPOJO manager) {
 		Manager m = new Manager();
 		BeanUtils.copyProperties(manager,m);
-		adminService.saveManager(m);
+		boolean isInserted = adminService.saveManager(m);
+		if(isInserted) {
+			LOGGER.info("Manager has been added successfully");
+		} else {
+			LOGGER.info("Manager has not added in database");
+		}
 		return "redirect:/admin/manager";
 	}
 	
@@ -229,7 +241,12 @@ public class AdminController {
 	public String createHR(@ModelAttribute("hr") HRPOJO hr) {
 		HR h = new HR();
 		BeanUtils.copyProperties(hr,h);
-		adminService.saveHR(h);
+		boolean isInserted = adminService.saveHR(h);
+		if(isInserted) {
+			LOGGER.info("HR has been added successfully");
+		} else {
+			LOGGER.info("HR has not added in database");
+		}
 		return "redirect:/admin/hr";
 	}
 	
@@ -270,5 +287,4 @@ public class AdminController {
 		mv.addObject(MESSAGE, MANAGER_MAPPED_EXCEPTION);
 		return mv;
 	}
-	
 }

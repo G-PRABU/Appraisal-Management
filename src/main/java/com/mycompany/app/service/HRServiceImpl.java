@@ -89,6 +89,7 @@ public class HRServiceImpl implements HRService {
 		    return false;
 		}
 	}
+	
 	@Override
 	public boolean deleteGoal(Long id)
 	{
@@ -118,7 +119,7 @@ public class HRServiceImpl implements HRService {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public List<Employee> searchEmployee(String keyword)
 	{

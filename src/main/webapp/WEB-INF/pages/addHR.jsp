@@ -25,6 +25,8 @@
   <a href="/Appraisal-Management/admin/add">Admin</a>
   <a href="/Appraisal-Management/admin/profile/${admin.id} ">Profile</a>
   <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+    <a style="float:right;" href="/Appraisal-Management/admin/hr">Back</a>
+  
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
@@ -43,12 +45,12 @@ function myFunction() {
  <br><br>
  <div class="container">
    <form:form action="/Appraisal-Management/admin/hr/create" method="post" modelAttribute="hr">
-     <div class="row">
+    <div class="row">
        <div class="col-25">
          <label for="name">Name</label>
        </div>
        <div class="col-75">
-         <form:input path="name" />
+         <form:input path="name" placeholder="Required" required="true"/>
        </div>
      </div>
      <div class="row">
@@ -56,7 +58,7 @@ function myFunction() {
          <label for="dob">DOB</label>
        </div>
        <div class="col-75">
-         <form:input path="dob" type="date"/>
+         <form:input type="date" path="dob" placeholder="DD/MM/YYYY" required="true" />
        </div>
      </div>
      <div class="row">
@@ -64,7 +66,7 @@ function myFunction() {
          <label for="email">Email</label>
        </div>
        <div class="col-75">
-         <form:input path="email" />
+         <form:input type="email" path="email" placeholder="Required" required="true"/>
        </div>
      </div>
      <div class="row">
@@ -72,7 +74,7 @@ function myFunction() {
          <label for="phone">Phone</label>
        </div>
        <div class="col-75">
-         <form:input path="phone" />
+         <form:input type="number" path="phone" placeholder="Required" required="true" min="5555555555" max="9999999999"/>
        </div>
      </div>
      <div class="row">
@@ -80,7 +82,7 @@ function myFunction() {
          <label for="authorizationPass">Password</label>
        </div>
        <div class="col-75">
-         <form:password path="authorization.authorizationPass" />
+         <form:password path="authorization.authorizationPass" placeholder="Required" required="true" />
        </div>
      </div>
      <br>

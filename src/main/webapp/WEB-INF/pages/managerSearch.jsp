@@ -18,9 +18,10 @@
   
   
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/manager/" class="active">Home</a>
+  <a href="/Appraisal-Management/manager" class="active">Home</a>
   <a href="/Appraisal-Management/manager/manager_profile/${manager.id}">Profile</a>
   <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+    <a style="float:right;" href="/Appraisal-Management/manager">Back</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
@@ -40,20 +41,21 @@ function myFunction() {
 
 <br>
 
-<div align="center" tm="5">
+<div>
 <form method="get" action="search">
 		<input type="text" name="keyword" /> &nbsp;
 		<input type="submit" value="Search" />
 	</form>
 	</div>
 	<TABLE class="user" >
-		<div align="center">
+	<caption></caption>
+		<div>
 			<TR>
-				<TH><h6>ID</h6></TH>
-				<TH><h6>DOB</h6></TH>
-				<TH><h6>EMAIL</h6></TH>
-				<TH><h6>NAME</h6></TH>
-				<TH><h6>VIEW</h6></TH>
+				<TH id=""><h6>ID</h6></TH>
+				<TH id=""><h6>DOB</h6></TH>
+				<TH id=""><h6>EMAIL</h6></TH>
+				<TH id=""><h6>NAME</h6></TH>
+				<TH id=""><h6>VIEW</h6></TH>
 			</TR>
 			
 			<h1>Employee List</h1>

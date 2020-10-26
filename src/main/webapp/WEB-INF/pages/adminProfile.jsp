@@ -24,6 +24,7 @@
   <a href="/Appraisal-Management/admin/add">Admin</a>
   <a href="/Appraisal-Management/admin/${admin.id}" class="active">Profile</a>
   <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+    <a style="float:right;" href="/Appraisal-Management/admin">Back</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
