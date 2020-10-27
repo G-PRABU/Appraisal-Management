@@ -44,6 +44,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(ADMIN);
 		mv.addObject(ADMIN,adminService.getAdmin(authentication.getName()));
+		mv.addObject("admins",adminService.getAllAdmin());
 		return mv;
 	}
 	
@@ -67,7 +68,32 @@ public class AdminController {
 	public String createAdmin(@ModelAttribute("a") AdminPOJO admin) {
 		Admin a = new Admin();
 		BeanUtils.copyProperties(admin,a);
-		adminService.saveAdmin(a);
+		boolean isInserted = adminService.saveAdmin(a);
+		if(isInserted) {
+			LOGGER.info("Admin has been added successfully");
+		} else {
+			LOGGER.info("Admin has not added in database");
+		}
+		return "redirect:/admin";
+	}
+	
+	@GetMapping("admin/get/{id}")
+	public ModelAndView getAdmin(@PathVariable("id") Long id,Authentication authentication) {
+		ModelAndView mv  = new ModelAndView();
+		mv.setViewName("adminsAdmin");
+		mv.addObject(ADMIN,adminService.getAdmin(authentication.getName()));
+		mv.addObject("employee", adminService.getAdmin(id));
+		return mv;
+	}
+	
+	@GetMapping("admin/delete/{id}")
+	public String deleteAdmin(@PathVariable("id") Long id) {
+		boolean isDeleted = adminService.deleteAdmin(id);
+		if(isDeleted) {
+			LOGGER.info("Admin is deleted successfully.  ID : "+id);
+		} else {
+			LOGGER.info("Admin is not deleted.");
+		}
 		return "redirect:/admin";
 	}
 	
@@ -109,7 +135,6 @@ public class AdminController {
 		mv.setViewName("addEmployee");
 		mv.addObject(ADMIN,adminService.getAdmin(authentication.getName()));
 		mv.addObject("managers", adminService.getAllManager());
-		mv.addObject("roles", adminService.getAllRoles());
 		return mv;
 	}
 	
@@ -128,7 +153,12 @@ public class AdminController {
 	
 	@GetMapping("admin/employee/delete/{id}")
 	public String deleteEmployee(@PathVariable("id") Long id) {
-		adminService.deleteEmployee(id);
+		boolean isDeleted = adminService.deleteEmployee(id);
+		if(isDeleted) {
+			LOGGER.info("Employee is deleted successfully.  ID : "+id);
+		} else {
+			LOGGER.info("Employee is not deleted.");
+		}
 		return "redirect:/admin/employee";
 	}
 	
@@ -191,7 +221,10 @@ public class AdminController {
 	public String deleteManager(@PathVariable("id") Long id) throws ManagerMappedException {
 		boolean isDeleted = adminService.deleteManager(id);
 		if(!isDeleted) {
+			LOGGER.info("Manager is not deleted.");
 			throw new ManagerMappedException(id);
+		} else {
+			LOGGER.info("Manager is deleted Successfully.  ID : "+id);
 		}
 		return "redirect:/admin/manager";
 	}
@@ -254,7 +287,10 @@ public class AdminController {
 	public String deleteHR(@PathVariable("id") Long id) throws HRMappedException {
 		boolean isDeleted = adminService.deleteHR(id);
 		if(!isDeleted) {
+			LOGGER.info("HR is not deleted. ");
 			throw new HRMappedException(id);
+		} else {
+			LOGGER.info("HR is deleted successfully.  ID : "+id);
 		}
 		return "redirect:/admin/hr";
 	}

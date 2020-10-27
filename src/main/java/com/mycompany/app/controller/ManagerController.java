@@ -2,6 +2,7 @@ package com.mycompany.app.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,6 +38,7 @@ public class ManagerController {
 	private static final int FAIR=3;
 	private static final int IMPROVEMENT=2;
 	private static final int UNSATISFACTORY=1;
+	private static final Logger LOGGER = Logger.getLogger(ManagerController.class);
 	
 	@GetMapping("/manager")
 	public ModelAndView showManager(Authentication authentication) {
@@ -98,7 +100,12 @@ public class ManagerController {
 	{		
 		GoalRating gr=new GoalRating();
 		BeanUtils.copyProperties(goalRating,gr);
-		managerService.saveRating(gr,id);
+		boolean isInserted=managerService.saveRating(gr,id);
+		if(isInserted) {
+			LOGGER.info("Rating has been added successfully");
+		} else {
+			LOGGER.info("Rating has not added in database");
+		}
 		List<AssignedGoal> assignedGoal=employeeService.getAllAssignedGoal(managerService.getEmployee(empId));
 		mv.addObject("a",assignedGoal);
 		mv.addObject(EMPLOYEE, managerService.getEmployee(empId));

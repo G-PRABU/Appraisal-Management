@@ -14,9 +14,9 @@ public interface EmployeeService {
 
 	Goal getGoal(Long id);
 
-	void assignGoal(Employee employee, Goal goal);
+	boolean assignGoal(Employee employee, Goal goal);
 
-	void completeGoal(long id);
+	boolean completeGoal(long id);
 
 	List<AssignedGoal> getAllAssignedGoal(Employee employee);
 

@@ -45,8 +45,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void completeGoal(long id)
+	public boolean completeGoal(long id)
 	{
+		try
+		{
 		AssignedGoal assignedGoal=assignedGoalRepository.getOne(id);
 		assignedGoal.setGoalStatus(true);
 		
@@ -55,7 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		assignedGoal.setEndDate(date);
 		
 		assignedGoalRepository.save(assignedGoal);
-		
+		return true;
+		} catch(Exception ex) {
+		    return false;
+		}
 	}
 	
 	@Override
@@ -69,8 +74,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void assignGoal(Employee employee,Goal goal)
+	public boolean assignGoal(Employee employee,Goal goal)
 	{
+		try
+		{
 		AssignedGoal assignGoal=new AssignedGoal();
 		assignGoal.setEmployee(employee);
 		assignGoal.setGoal(goal);
@@ -81,7 +88,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		assignGoal.setStartDate(date);		
 		
 		assignedGoalRepository.save(assignGoal);
-		
+		return true;
+		} catch(Exception ex) {
+		    return false;
+		}
 	}
 	
 	public Manager getManager(Employee employee) {

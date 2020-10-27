@@ -1,5 +1,6 @@
 package com.mycompany.app.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,9 @@ public class EmployeeController {
 	@Autowired
 	EmployeeServiceImpl employeeService;
 	
-	String page="EmployeeGoal";
-	String pageEmp="employee";
+	private static final String EMPLOYEEGOAL="EmployeeGoal";
+	private static final String EMPLOYEE="employee";
+	private static final Logger LOGGER = Logger.getLogger(EmployeeController.class);
 
 		@GetMapping("/employee")
 		public ModelAndView showEmployee(Authentication authentication) {
@@ -28,7 +30,7 @@ public class EmployeeController {
 		String username=authentication.getName();
 		Employee employee=employeeService.getEmployee(username);	
 		mv.addObject("a",employeeService.getAllAssignedGoal(employee));
-		mv.setViewName(pageEmp);
+		mv.setViewName(EMPLOYEE);
 		return mv;
 	}
 	
@@ -38,9 +40,14 @@ public class EmployeeController {
 		ModelAndView mv=new ModelAndView();
 		String username=authentication.getName();
 		Employee employee=employeeService.getEmployee(username);
-		employeeService.completeGoal(id);
+		boolean isCompleted=employeeService.completeGoal(id);
+		if(isCompleted) {
+			LOGGER.info("Goal Completion has been done successfully");
+		} else {
+			LOGGER.info("Goal Completion has not been done");
+		}
 		mv.addObject("a",employeeService.getAllAssignedGoal(employee));
-		mv.setViewName(pageEmp);
+		mv.setViewName(EMPLOYEE);
 		return mv;
 	}
 	
@@ -51,7 +58,7 @@ public class EmployeeController {
 		ModelAndView mv= new ModelAndView();
 		String username=authentication.getName();
 		Employee employee=employeeService.getEmployee(username);
-		mv.addObject("employee",employee);
+		mv.addObject(EMPLOYEE,employee);
 		mv.setViewName("employeeProfile");
 		return mv;
 	}
@@ -62,7 +69,7 @@ public class EmployeeController {
 	{
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("goal",employeeService.getAllGoals());
-		mv.setViewName(page);
+		mv.setViewName(EMPLOYEEGOAL);
 		return mv;
 	}
 	
@@ -71,7 +78,7 @@ public class EmployeeController {
 	{
 		ModelAndView mv=new ModelAndView();
 		mv.addObject("goal",employeeService.search(keyword));
-		mv.setViewName(page);
+		mv.setViewName(EMPLOYEEGOAL);
 		
 		return mv;
 	}
@@ -98,9 +105,14 @@ public class EmployeeController {
 		String username=authentication.getName();
 		Employee employee=employeeService.getEmployee(username);
 		Goal g=employeeService.getGoal(goalId);
-		employeeService.assignGoal(employee,g);
+		boolean isInserted = employeeService.assignGoal(employee,g);
+		if(isInserted) {
+			LOGGER.info("Goal Assigned has been added successfully");
+		} else {
+			LOGGER.info("Goal has not been Assigned");
+		}
 		mv.addObject("goal",employeeService.getAllGoals());
-		mv.setViewName(page);
+		mv.setViewName(EMPLOYEEGOAL);
 		return mv;
 	}
 	

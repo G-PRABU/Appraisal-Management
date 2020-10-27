@@ -2,6 +2,7 @@ package com.mycompany.app.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.mycompany.app.exception.GoalAssignedException;
 import com.mycompany.app.model.AssignedGoal;
 import com.mycompany.app.model.Employee;
@@ -37,9 +37,9 @@ public class HRController {
 	@Autowired
 	EmployeeServiceImpl employeeService;
 	
-	String page="HrGoal";
-	String obj="employee";
-	
+	private static final String HRGOAL="HrGoal";
+	private static final String EMPLOYEE="employee";
+	private static final Logger LOGGER = Logger.getLogger(HRController.class);
 	private static final String MESSAGE = "message";
 	private static final String GOAL_ASSIGNED_EXCEPTION = "Goal has been assigned to the Employee.";
 	
@@ -65,37 +65,27 @@ public class HRController {
 		return mv;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	@GetMapping("/hr/viewManager/{id}")
 	public ModelAndView viewManager(@PathVariable long id) {
 		ModelAndView mv = new ModelAndView();
 		
 		Manager manager = hrService.getManager(id);
 		List<Employee> employee=hrService.getAllEmployees(manager);
-		mv.addObject(obj,employee);
+		mv.addObject(EMPLOYEE,employee);
 		mv.setViewName("hrViewManager");
 		return mv;
 	}
-	
-	
 	
 	@RequestMapping("/hr/searchEmployee")
 	public ModelAndView searchEmployee(@RequestParam String keyword)
 	{
 		ModelAndView mv=new ModelAndView();
 		List<Employee> employee=hrService.searchEmployee(keyword);
-		mv.addObject(obj,employee);
+		mv.addObject(EMPLOYEE,employee);
 		mv.setViewName("hrViewManager");
 		return mv;
 	}
-	
-	
+
 	@GetMapping("/hr/view/{id}")
 	public ModelAndView viewEmployee(@PathVariable long id)
 	{
@@ -106,7 +96,7 @@ public class HRController {
 		
 		mv.addObject("a",assignedGoal);
 		
-		mv.addObject(obj,employee);
+		mv.addObject(EMPLOYEE,employee);
 		
 		mv.setViewName("hrViewEmp");
 		return mv;
@@ -118,7 +108,7 @@ public class HRController {
 		ModelAndView mv = new ModelAndView();
 		List<Goal> goals=hrService.getAllGoals();
 		mv.addObject("goal",goals);
-		mv.setViewName(page);
+		mv.setViewName(HRGOAL);
 		return mv;
 	}
 	
@@ -189,10 +179,15 @@ public class HRController {
 	{	
 		Goal g = new Goal();
 		BeanUtils.copyProperties(goal,g);
-		hrService.saveGoal(g);
+		boolean isInserted = hrService.saveGoal(g);
+		if(isInserted) {
+			LOGGER.info("Goal has been added successfully");
+		} else {
+			LOGGER.info("Goal has not added in database");
+		}
 		List<Goal> goals=hrService.getAllGoals();
 		mv.addObject("goal",goals);
-		mv.setViewName(page);
+		mv.setViewName(HRGOAL);
 		return mv;
 	}
 	
@@ -202,10 +197,15 @@ public class HRController {
 	{	
 		Goal g = new Goal();
 		BeanUtils.copyProperties(goal,g);
-		hrService.updateGoal(g);
+		boolean isUpdated=hrService.updateGoal(g);
+		if(isUpdated) {
+			LOGGER.info("Goal Updation has been added successfully");
+		} else {
+			LOGGER.info("Goal Updation has not added in database");
+		}
 		List<Goal> goals=hrService.getAllGoals();
 		mv.addObject("goal",goals);
-		mv.setViewName(page);
+		mv.setViewName(HRGOAL);
 		return mv;
 	}
 	

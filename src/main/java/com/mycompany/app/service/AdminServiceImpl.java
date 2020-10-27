@@ -213,7 +213,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public boolean deleteAdmin(Long id) {
+	public boolean deleteAdmin(Long id){
+		List<Admin> admins = adminRepository.findAll();
+		if(admins.size()==1) {
+			return false;
+		}
 		Optional<Admin> admin = adminRepository.findById(id);
 		if(admin.isPresent()) {
 			adminRepository.deleteById(id);

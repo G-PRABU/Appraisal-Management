@@ -17,13 +17,15 @@
   
   
   <div class="topnav" id="myTopnav">
-  <a href="/Appraisal-Management/admin" class="active">Home</a>
-  <a href="/Appraisal-Management/admin/employee">Employee</a>
+  <a href="/Appraisal-Management/admin">Home</a>
+  <a href="/Appraisal-Management/admin/employee" class="active">Employee</a>
   <a href="/Appraisal-Management/admin/manager">Manager</a>
   <a href="/Appraisal-Management/admin/hr">HR</a>
   <a href="/Appraisal-Management/admin/add">Admin</a>
   <a href="/Appraisal-Management/admin/profile/${admin.id} ">Profile</a>
   <a style="float:right;" href="/Appraisal-Management/logout">Logout</a>
+      <a style="float:right;" href="/Appraisal-Management/admin/employee">Back</a>
+  
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <em class="fa fa-bars"></em>
   </a>
@@ -39,29 +41,45 @@ function myFunction() {
   }
 }
 </script>
-  
-  <div>
- <table class="user">
-  <caption>Admins</caption>
-  <tr>
-   <th id="id">ID</th>
-   <th id="name">NAME</th>
-   <th id="email">EMAIL</th>
-   <th id=""></th>
-  </tr>
-  <c:forEach var="admin" items="${admins}">
-    <tr>
-     <td><c:out value="${admin.id}"/></td>
-     <td><c:out value="${admin.name}"/></td>
-     <td><c:out value="${admin.email}"/></td>
-     <td><a href="/Appraisal-Management/admin/get/${admin.id}">View</a></td>
-    </tr>
-  </c:forEach>
- </table>
- </div>
+
+ <div class="container">
+   <div class="row">
+    <div class="col-25">
+     <h3>Id</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.id}"/></h3>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-25">
+     <h3>Name</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.name}"/></h3>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-25">
+     <h3>DOB</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.dob}"/></h3>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-25">
+     <h3>Email</h3>
+    </div>
+    <div class="col-75">
+     <h3><c:out value="${employee.email}"/></h3>
+    </div>
+   </div>
+   </div>
+ <a href="/Appraisal-Management/admin/delete/${employee.id}"><button class="addButton">Delete</button></a>
 <br><br><br>
 <div class="footer">
   <h4>Copyright @2020.</h4>
 </div>
- </body>
+  </body>
 </html>
