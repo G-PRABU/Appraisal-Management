@@ -40,7 +40,7 @@ function myFunction() {
 
 <br>
 <div style="margin:0px 400px">
-<form method="get" action="search">
+<form method="get" action="/Appraisal-Management/manager/search">
 		<input type="text" name="keyword" /> &nbsp;
 		<input type="submit" value="Search" />
 	</form>
@@ -50,7 +50,6 @@ function myFunction() {
 	
 	<TABLE class="user" >
 	<caption></caption>
-		<div style="margin: 0 auto;">
 			<TR>
 				<TH id=1><h6>ID</h6></TH>
 				<TH id=2><h6>DOB</h6></TH>
@@ -68,10 +67,6 @@ function myFunction() {
 					<td><a href="/Appraisal-Management/manager/viewprofile?id=${employee.id}">ViewProfile</a></td>
 				</tr> 
 		</c:forEach>
-			${manager.id }
-			${manager.name }
-			${manager.dob }
-		</div>
 	</TABLE>
 	
 <br><br><br>
